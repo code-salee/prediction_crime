@@ -36,6 +36,4 @@ public class CrimeEntity {
     private LocalDate date;
 }
 
-code-salee
-/
-prediction_crime
+
