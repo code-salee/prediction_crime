@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.prediction_crime.dto.CrimeDto;
-import com.prediction_crime.entities.CrimeEntity;
 
 public interface CrimeService {
  
@@ -25,5 +24,4 @@ public interface CrimeService {
     CrimeDto update(CrimeDto crimeDto, Long id);
 
     void delete(Long id);
-
 }

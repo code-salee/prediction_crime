@@ -35,12 +35,32 @@ public class AppExceptionHandler {
         return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(value = {VictimExceptionHandler.class})
+    public ResponseEntity<ErrorMessage> victimExceptionHandler (VictimExceptionHandler ex){
+        ErrorMessage errorMessage = ErrorMessage.builder()
+                .message(ex.getMessage())
+                .timestamp(new Date())
+                .code(404)
+                .build();
+        return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
+    }
+
     @ExceptionHandler(value = {MethodArgumentNotValidException.class})
     public ResponseEntity<Object> HandleMethodArgumentNotValidException (MethodArgumentNotValidException ex){
         Map<String, String> errors = new HashMap<>();
         ex.getBindingResult().getFieldErrors().forEach(error ->
                 errors.put(error.getField(), error.getDefaultMessage()));
         return new ResponseEntity<>(errors, new HttpHeaders(), HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+
+    @ExceptionHandler(value = {InvalidEntityException.class})
+    public ResponseEntity<Object> invalidEntityException (InvalidEntityException ex){
+        ErrorMessage errorMessage = ErrorMessage.builder()
+                .message(ex.getMessage())
+                .timestamp(new Date())
+                .code(409)
+                .build();
+        return new ResponseEntity<>(errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(value = {EntityAlreadyExistsException.class})
